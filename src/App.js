@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Draft Lottery Generator</h1>
+          <h1>Draft Lottery</h1>
         </header>
         <Lottery />
       </div>

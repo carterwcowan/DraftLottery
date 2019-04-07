@@ -10,12 +10,26 @@ const PlayerList = ({ items, onItemClick }) => (
   </ol>
 );
 
+const ResultsList = ({ results }) => (
+  <div>
+    <h2>Draft Order</h2>
+    <ol>
+      {results.map((result, i) => (
+        <Result key={i} name={result} />
+      ))}
+    </ol>
+  </div>
+);
+
+const Result = ({ name }) => <li>{name}</li>;
+
 class Lottery extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: "",
-      players: []
+      players: [],
+      results: []
     };
     this.run = this.run.bind(this);
   }
@@ -29,9 +43,9 @@ class Lottery extends Component {
   };
 
   run = () => {
-    console.log(this.state);
     const draftOrder = this.getDraftOrder(this.state.players);
-    alert(draftOrder);
+    this.state.results = draftOrder;
+    this.setState({ results: draftOrder });
   };
 
   onChange = e => this.setState({ inputValue: e.target.value });
@@ -73,7 +87,7 @@ class Lottery extends Component {
   }
 
   shuffle(array) {
-    var m = array.length,
+    let m = array.length,
       t,
       i;
 
@@ -88,18 +102,24 @@ class Lottery extends Component {
   }
 
   render() {
-    const { players: players, inputValue } = this.state;
+    const { players: players, inputValue, results: results } = this.state;
     return (
       <div className="lottery-container">
         <div className="lotter-wrapper">
-          <PlayerList items={players} onItemClick={this.handleItemClick} />
-          <input type="text" value={inputValue} onChange={this.onChange} />
-          <button className="addPlayer" onClick={this.onClick}>
-            Add
-          </button>
+          <div className="add-players">
+            <h2>Standings</h2>
+            <PlayerList items={players} onItemClick={this.handleItemClick} />
+            <input type="text" value={inputValue} onChange={this.onChange} />
+            <button className="addPlayer" onClick={this.onClick}>
+              Add
+            </button>
+          </div>
+          <div className="controls">
+            <button onClick={this.run}>Run Lottery!</button>
+          </div>
         </div>
-        <div className="controls">
-          <button onClick={this.run}>Run Lottery!</button>
+        <div className="results">
+          <ResultsList results={results} />
         </div>
       </div>
     );
