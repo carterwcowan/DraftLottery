@@ -50,6 +50,27 @@ const LotteryView = props => {
   );
 };
 
+const LotteryControls = props => {
+  const showResults = props.showResults;
+  const players = props.players;
+  const run = props.run;
+  const reset = props.reset;
+
+  if (players.length > 0 || showResults) {
+    return (
+      <div className="controls">
+        <button onClick={run}>Run Lottery!</button>
+        <button onClick={reset}>Reset?</button>
+      </div>
+    );
+  }
+  return (
+    <div className="controls">
+      <button onClick={run}>Run Lottery!</button>
+    </div>
+  );
+};
+
 class Lottery extends Component {
   constructor(props) {
     super(props);
@@ -143,19 +164,21 @@ class Lottery extends Component {
     return (
       <div className="lottery-container">
         <div className="lotter-wrapper">
-          <div className="controls">
-            <LotteryView
-              showResults={showResults}
-              players={players}
-              inputValue={inputValue}
-              handleItemClick={this.handleItemClick}
-              onChange={this.onChange}
-              onClick={this.onClick}
-              results={results}
-            />
-            <button onClick={this.run}>Run Lottery!</button>
-            <button onClick={this.reset}>Reset?</button>
-          </div>
+          <LotteryView
+            showResults={showResults}
+            players={players}
+            inputValue={inputValue}
+            handleItemClick={this.handleItemClick}
+            onChange={this.onChange}
+            onClick={this.onClick}
+            results={results}
+          />
+          <LotteryControls
+            showResults={showResults}
+            players={players}
+            run={this.run}
+            reset={this.reset}
+          />
         </div>
       </div>
     );
