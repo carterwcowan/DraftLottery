@@ -23,13 +23,41 @@ const ResultsList = ({ results }) => (
 
 const Result = ({ name }) => <li>{name}</li>;
 
+const LotteryView = props => {
+  const showResults = props.showResults;
+  const players = props.players;
+  const inputValue = props.inputValue;
+  const handleItemClick = props.handleItemClick;
+  const onChange = props.onChange;
+  const onClick = props.onClick;
+  const results = props.results;
+  if (!showResults) {
+    return (
+      <div className="add-players">
+        <h2>Standings</h2>
+        <PlayerList items={players} onItemClick={handleItemClick} />
+        <input type="text" value={inputValue} onChange={onChange} />
+        <button className="addPlayer" onClick={onClick}>
+          Add
+        </button>
+      </div>
+    );
+  }
+  return (
+    <div className="results">
+      <ResultsList results={results} />
+    </div>
+  );
+};
+
 class Lottery extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: "",
       players: [],
-      results: []
+      results: [],
+      showResults: false
     };
     this.run = this.run.bind(this);
   }
@@ -45,7 +73,7 @@ class Lottery extends Component {
   run = () => {
     const draftOrder = this.getDraftOrder(this.state.players);
     this.state.results = draftOrder;
-    this.setState({ results: draftOrder });
+    this.setState({ results: draftOrder, showResults: true });
   };
 
   onChange = e => this.setState({ inputValue: e.target.value });
@@ -102,24 +130,27 @@ class Lottery extends Component {
   }
 
   render() {
-    const { players: players, inputValue, results: results } = this.state;
+    const {
+      players: players,
+      inputValue,
+      results: results,
+      showResults: showResults
+    } = this.state;
     return (
       <div className="lottery-container">
         <div className="lotter-wrapper">
-          <div className="add-players">
-            <h2>Standings</h2>
-            <PlayerList items={players} onItemClick={this.handleItemClick} />
-            <input type="text" value={inputValue} onChange={this.onChange} />
-            <button className="addPlayer" onClick={this.onClick}>
-              Add
-            </button>
-          </div>
           <div className="controls">
+            <LotteryView
+              showResults={showResults}
+              players={players}
+              inputValue={inputValue}
+              handleItemClick={this.handleItemClick}
+              onChange={this.onChange}
+              onClick={this.onClick}
+              results={results}
+            />
             <button onClick={this.run}>Run Lottery!</button>
           </div>
-        </div>
-        <div className="results">
-          <ResultsList results={results} />
         </div>
       </div>
     );
