@@ -1,10 +1,10 @@
-# Draft Lottery Generator
+# 🏆 Draft Lottery 🏈
 This project is to generate a fantasy sport draft order, based on a lottery system.
 
 ## How it works
-A lottery pot is created with 8 teams in the lottery. Teams are given the number of tickets that correspond to their number (e.g. Team 6 gets 6 tickets)
+A lottery pot is created with the number teams entered. Teams are given the number of tickets that correspond to their number (e.g. Team 2 gets 2 tickets, Team 6 gets 6 tickets, Team 50 gets 50 ticksts, etc.)
 
-Each round, a number (1-8) is picked out of the pot. That pick is the team drafting in that position. After a number is pulled, the remaining instances of that number are also removed from the pot.
+Each round, a number is randomly picked out of the pot. That pick is the team drafting in that position. After a number is pulled, the remaining instances of that number are also removed from the pot.
 
 
 - 1st - 8 tickets - 22.22% chance at first pick
