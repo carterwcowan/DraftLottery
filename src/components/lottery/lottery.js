@@ -76,6 +76,10 @@ class Lottery extends Component {
     this.setState({ results: draftOrder, showResults: true });
   };
 
+  reset = () => {
+    this.setState({ showResults: false, players: [], results: [] });
+  };
+
   onChange = e => this.setState({ inputValue: e.target.value });
 
   handleItemClick = e => {
@@ -150,6 +154,7 @@ class Lottery extends Component {
               results={results}
             />
             <button onClick={this.run}>Run Lottery!</button>
+            <button onClick={this.reset}>Reset?</button>
           </div>
         </div>
       </div>
