@@ -30,13 +30,14 @@ const LotteryView = props => {
   const handleItemClick = props.handleItemClick;
   const onChange = props.onChange;
   const onClick = props.onClick;
+  const onKeyDown = props.onKeyDown;
   const results = props.results;
   if (!showResults) {
     return (
       <div className="add-players">
         <h2>Standings</h2>
         <PlayerList items={players} onItemClick={handleItemClick} />
-        <input type="text" value={inputValue} onChange={onChange} />
+        <input type="text" value={inputValue} onChange={onChange} onKeyDown={onKeyDown} />
         <button className="addPlayer" onClick={onClick}>
           Add
         </button>
@@ -83,7 +84,7 @@ class Lottery extends Component {
     this.run = this.run.bind(this);
   }
 
-  onClick = () => {
+  addPlayer = () => {
     const { inputValue, players: players } = this.state;
     if (inputValue) {
       const nextState = [...players, inputValue];
@@ -102,6 +103,12 @@ class Lottery extends Component {
   };
 
   onChange = e => this.setState({ inputValue: e.target.value });
+
+  onKeyDown = e => {
+    if (e.key === 'Enter') {
+      this.addPlayer();
+    }
+  }
 
   handleItemClick = e => {
     console.log(e.target.innerHTML);
@@ -170,8 +177,9 @@ class Lottery extends Component {
             inputValue={inputValue}
             handleItemClick={this.handleItemClick}
             onChange={this.onChange}
-            onClick={this.onClick}
+            onClick={this.addPlayer}
             results={results}
+            onKeyDown={this.onKeyDown}
           />
           <LotteryControls
             showResults={showResults}
