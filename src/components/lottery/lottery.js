@@ -85,7 +85,7 @@ class Lottery extends Component {
   }
 
   addPlayer = () => {
-    const { inputValue, players: players } = this.state;
+    const { inputValue, players } = this.state;
     if (inputValue) {
       const nextState = [...players, inputValue];
       this.setState({ players: nextState, inputValue: "" });
@@ -94,7 +94,7 @@ class Lottery extends Component {
 
   run = () => {
     const draftOrder = this.getDraftOrder(this.state.players);
-    this.state.results = draftOrder;
+    // this.state.results = draftOrder;
     this.setState({ results: draftOrder, showResults: true });
   };
 
@@ -163,10 +163,10 @@ class Lottery extends Component {
 
   render() {
     const {
-      players: players,
+      players,
       inputValue,
-      results: results,
-      showResults: showResults
+      results,
+      showResults
     } = this.state;
     return (
       <div className="lottery-container">
